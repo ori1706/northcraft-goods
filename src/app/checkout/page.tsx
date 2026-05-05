@@ -8,7 +8,7 @@ import { useCart } from "@/components/cart/CartProvider";
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, subtotalCents, replaceLines, refreshFromServer } = useCart();
+  const { items, subtotalCents, replaceLines, refreshFromServer, syncing } = useCart();
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -72,7 +72,7 @@ export default function CheckoutPage() {
 
           <button
             type="submit"
-            disabled={pending || items.length === 0}
+            disabled={pending || items.length === 0 || syncing}
             className="w-full rounded-full bg-teal-400 px-4 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-teal-300 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-200"
           >
             {pending ? "Placing order…" : "Place order"}
@@ -83,7 +83,9 @@ export default function CheckoutPage() {
       <aside className="space-y-4 rounded-[28px] border border-white/10 bg-white/[0.03] p-6 ring-1 ring-white/5">
         <p className="text-[11px] uppercase tracking-[0.26em] text-zinc-500">Order summary</p>
         <div className="space-y-3 text-sm text-zinc-300">
-          {items.length === 0 ? (
+          {syncing && items.length === 0 ? (
+            <p className="text-zinc-500">Loading cart…</p>
+          ) : items.length === 0 ? (
             <p className="text-zinc-500">Your cart is empty — add something luminous first.</p>
           ) : (
             items.map((item) => (

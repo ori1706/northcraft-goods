@@ -19,7 +19,11 @@ export default function CartPage() {
       </div>
 
       <div className="mt-10 space-y-4">
-        {items.length === 0 ? (
+        {syncing && items.length === 0 ? (
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-sm text-zinc-400">
+            Loading cart…
+          </div>
+        ) : items.length === 0 ? (
           <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-sm text-zinc-400">
             Nothing here yet.{" "}
             <Link href="/shop" className="text-teal-200 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/70">
