@@ -1,103 +1,138 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+import { ProductGrid } from "@/components/shop/ProductGrid";
+import { prisma } from "@/lib/prisma";
+
+export default async function Home() {
+  const [hero, desk, carry] = await Promise.all([
+    prisma.product.findMany({
+      where: { archived: false, featured: true },
+      include: { variants: true },
+      orderBy: { createdAt: "desc" },
+      take: 3,
+    }),
+    prisma.product.findMany({
+      where: { archived: false, category: "Desk & Tech" },
+      include: { variants: true },
+      orderBy: { featured: "desc" },
+      take: 4,
+    }),
+    prisma.product.findMany({
+      where: { archived: false, category: "Carry & Travel" },
+      include: { variants: true },
+      orderBy: { featured: "desc" },
+      take: 4,
+    }),
+  ]);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="relative">
+      <section className="relative overflow-hidden border-b border-white/10">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(45,212,191,0.16),transparent_55%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(59,130,246,0.12),transparent_55%)]" />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 lg:flex-row lg:items-center lg:gap-16 lg:py-20">
+          <div className="flex-1 space-y-7">
+            <p className="text-[11px] uppercase tracking-[0.38em] text-teal-200/90">Northcraft Goods</p>
+            <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-[3.35rem] lg:leading-[1.05]">
+              Quiet objects for tactile days—desk rituals, carry companions, glowing corners.
+            </h1>
+            <p className="max-w-xl text-base leading-relaxed text-zinc-400">
+              A production-ready storefront wired to Postgres inventory: optimistic carts, iframe-safe overlays, and checkout paths that fail gracefully when stock races ahead of you.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                href="/shop"
+                className="inline-flex items-center justify-center rounded-full bg-teal-400 px-7 py-3 text-sm font-semibold text-zinc-950 shadow-[0_14px_60px_rgba(45,212,191,0.35)] transition hover:bg-teal-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-200"
+              >
+                Shop all
+              </Link>
+              <Link
+                href="/shop?sort=newest"
+                className="inline-flex items-center justify-center rounded-full bg-white/[0.05] px-7 py-3 text-sm font-semibold text-white ring-1 ring-white/15 transition hover:bg-white/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/70"
+              >
+                See newest drops
+              </Link>
+            </div>
+
+            <div className="flex gap-6 pt-4 text-xs text-zinc-500">
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.26em] text-zinc-600">Shipping posture</p>
+                <p className="mt-2 text-sm text-zinc-300">Transparent stock counts · graceful checkout collisions</p>
+              </div>
+              <div className="hidden h-12 w-px bg-white/10 sm:block" />
+              <div className="hidden sm:block">
+                <p className="text-[11px] uppercase tracking-[0.26em] text-zinc-600">Made for embeds</p>
+                <p className="mt-2 text-sm text-zinc-300">No fixed-to-viewport cart · no vh heroes</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative flex-1">
+            <div
+              className="relative overflow-hidden rounded-[36px] border border-white/10 bg-white/[0.04] shadow-[0_28px_120px_rgba(0,0,0,0.55)] ring-1 ring-white/10"
+              style={{ minHeight: 600 }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={hero[0]?.images[0] ?? "https://images.unsplash.com/photo-1498049860656-af28884c997d?auto=format&fit=crop&w=1400&q=80"}
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-black/65 via-black/25 to-transparent" />
+              <div className="relative flex h-full min-h-[600px] flex-col justify-end p-8">
+                <p className="text-[11px] uppercase tracking-[0.34em] text-teal-100">Featured trio</p>
+                <div className="mt-4 grid gap-4 md:grid-cols-3">
+                  {hero.map((p) => (
+                    <Link
+                      key={p.id}
+                      href={`/shop/${p.slug}`}
+                      className="rounded-2xl border border-white/15 bg-black/35 p-4 text-sm text-white backdrop-blur-xl transition hover:border-teal-400/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/70"
+                    >
+                      <p className="text-xs uppercase tracking-[0.2em] text-zinc-300">{p.category}</p>
+                      <p className="mt-2 font-semibold leading-snug">{p.name}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      <section className="mx-auto max-w-6xl space-y-8 px-4 py-16">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.34em] text-teal-200/90">Featured collections</p>
+            <h2 className="mt-3 text-3xl font-semibold text-white">Desk rituals · Carry companions</h2>
+          </div>
+          <Link href="/shop" className="text-sm text-teal-200 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/70">
+            Browse entire catalog →
+          </Link>
+        </div>
+
+        <div className="space-y-10">
+          <div>
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <h3 className="text-lg font-semibold text-white">Desk & Tech</h3>
+              <Link className="text-xs text-zinc-400 underline-offset-4 hover:text-teal-200 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/70" href="/shop?category=Desk+%26+Tech">
+                Filter category
+              </Link>
+            </div>
+            <ProductGrid products={desk} />
+          </div>
+
+          <div>
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <h3 className="text-lg font-semibold text-white">Carry & Travel</h3>
+              <Link className="text-xs text-zinc-400 underline-offset-4 hover:text-teal-200 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/70" href="/shop?category=Carry+%26+Travel">
+                Filter category
+              </Link>
+            </div>
+            <ProductGrid products={carry} />
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
