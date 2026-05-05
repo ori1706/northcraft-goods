@@ -51,6 +51,8 @@ npm run db:seed
 npm run dev                   # http://localhost:3000
 ```
 
+_Note:_ If `3000` is already taken by another local app, run `npm run dev -- --port 3010` (this QA session verified Northcraft on **3010**). For `iframe-test.html`, serve the repo root (`npx --yes serve . -p 4173`) and open `http://localhost:4173/iframe-test`.
+
 **Admin password:** whatever you set in `ADMIN_PASSWORD` (`.env.example` suggests `changeme-strong-admin-secret`; the quick-start `.env` used while building used `northcraft-demo-admin`).
 
 ## Database schema (overview)
