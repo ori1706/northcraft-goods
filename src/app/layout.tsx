@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: "%s · Northcraft Goods",
   },
   description:
-    "An iframe-ready ecommerce showcase with Postgres-backed inventory, optimistic carts, and graceful checkout collisions.",
+    "Northcraft Goods — Postgres-backed ecommerce showcase with optimistic carts and graceful checkout collisions.",
 };
 
 export default function RootLayout({

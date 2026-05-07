@@ -10,7 +10,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <main className="relative flex-1">{children}</main>
       <SiteFooter />
 
-      {/* iframe-safe drawer surface */}
+      {/* Drawer mounts inside shell (avoid viewport-fixed overflow) */}
       <CartDrawer />
     </div>
   );

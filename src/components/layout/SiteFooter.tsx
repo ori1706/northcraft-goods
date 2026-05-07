@@ -35,9 +35,9 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <p className="text-[11px] uppercase tracking-[0.34em] text-zinc-500">Crafted for iframe embeds</p>
+          <p className="text-[11px] uppercase tracking-[0.34em] text-zinc-500">Contained overlays</p>
           <p className="mt-4 text-sm leading-relaxed text-zinc-400">
-            Cart overlays stay inside the Northcraft shell—no viewport-fixed traps—so career-page frames stay pristine on every host.
+            Cart overlays stay inside the Northcraft shell—no viewport-fixed traps—so dialogs and drawers never escape the layout.
           </p>
         </div>
       </div>

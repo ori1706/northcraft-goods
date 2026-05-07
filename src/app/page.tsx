@@ -38,7 +38,7 @@ export default async function Home() {
               Quiet objects for tactile days—desk rituals, carry companions, glowing corners.
             </h1>
             <p className="max-w-xl text-base leading-relaxed text-zinc-400">
-              A production-ready storefront wired to Postgres inventory: optimistic carts, iframe-safe overlays, and checkout paths that fail gracefully when stock races ahead of you.
+              A production-ready storefront wired to Postgres inventory: optimistic carts, overlays anchored in the app shell, and checkout paths that fail gracefully when stock races ahead of you.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link

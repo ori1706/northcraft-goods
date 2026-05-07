@@ -1,6 +1,6 @@
 # Northcraft Goods
 
-**Polished Next.js storefront with Postgres inventory, iframe-safe overlays, and graceful checkout collisions.**
+**Polished Next.js storefront with Postgres inventory, shell-anchored overlays, and graceful checkout collisions.**
 
 ![Northcraft Goods preview](https://images.unsplash.com/photo-1498049860656-af28884c997d?auto=format&fit=crop&w=1400&q=80)
 
@@ -35,7 +35,7 @@ Next.js 15 App Router (RSC + Route Handlers + Server Actions)
 - Product catalog with URL-driven filters (`category`, `priceMin`/`priceMax`, `inStock`, `sort`) plus skeleton loaders.
 - PDP with multi-image gallery, variant picker, live stock indicator, related products.
 - `/api/products?q=` search powering the global search bar.
-- Cart drawer **`position:absolute` inside the app shell** (iframe-safe) plus `/cart` parity, localStorage + `/api/cart` persistence, inventory warnings.
+- Cart drawer **`position:absolute` inside the app shell** (no stray viewport-fixed layers) plus `/cart` parity, localStorage + `/api/cart` persistence, inventory warnings.
 - Checkout hits `/api/checkout`, creates `Order` + `OrderItem` rows, decrements stock in a **serializable transaction**, clears server cart on success.
 - `/orders/[id]` confirmation page backed by Postgres (refresh-safe).
 - `/admin` gated by `ADMIN_PASSWORD` (+10 stock, edit price, archive, create SKU, orders with line items).
@@ -73,7 +73,7 @@ _Note:_ If `3000` is already taken by another local app, run `npm run dev -- --p
 
 If `npx vercel --prod --yes` prompts for interactive login, stop immediately and deploy via the dashboard (see note in team brief).
 
-## Iframe embed snippet
+## Embed snippet (parent page)
 
 ```html
 <iframe

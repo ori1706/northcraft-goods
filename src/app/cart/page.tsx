@@ -14,7 +14,7 @@ export default function CartPage() {
         <p className="text-[11px] uppercase tracking-[0.34em] text-teal-200/90">Cart</p>
         <h1 className="text-4xl font-semibold text-white">Review selections</h1>
         <p className="text-sm text-zinc-400">
-          Drawer mirrors this page—everything stays anchored inside the Northcraft shell for iframe compatibility.
+          Drawer mirrors this page—everything stays anchored inside the Northcraft shell.
         </p>
       </div>
 

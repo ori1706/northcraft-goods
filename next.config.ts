@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         headers: [
-          // Override frameworks that send DENY/SAMEORIGIN — career page embeds this app in an iframe.
+          // Override frameworks that send DENY/SAMEORIGIN — parent pages may nest this app.
           { key: "X-Frame-Options", value: "ALLOWALL" },
           { key: "Content-Security-Policy", value: "frame-ancestors *" },
         ],

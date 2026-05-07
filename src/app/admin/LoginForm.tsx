@@ -31,7 +31,7 @@ export function LoginForm() {
         <p className="text-[11px] uppercase tracking-[0.34em] text-teal-200/90">Admin access</p>
         <h1 className="text-3xl font-semibold text-white">Northcraft console</h1>
         <p className="text-sm text-zinc-400">
-          Password gates everything — tuned for iframe demos without heavyweight auth plumbing.
+          Password gates everything — lightweight demo gate without full auth plumbing.
         </p>
       </div>
 
